@@ -9,7 +9,7 @@ public class Main {
     }
     public static void menu(){
         Scanner scn = new Scanner(System.in);
-        System.out.println("======Genshin Battle Simulator======\n[1] Start\n[2] Quit");
+        System.out.println("======Genshin Battle Simulator======\nWelcome to the sim!\n[1] Start\n[2] Quit");
         String input = scn.nextLine();
         switch (input){
             case "1":

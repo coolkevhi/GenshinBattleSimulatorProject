@@ -4,6 +4,7 @@ public class BattleLog {
 
     private static ArrayList<String> batteLog = new ArrayList<>();
     private static int turn = 1;
+    private static int i = 1;
 
     public BattleLog(){
 
@@ -14,7 +15,6 @@ public class BattleLog {
     }
 
     public void add(String action){
-        int i = 1;
         batteLog.add(i +". " + "turn " + turn + " " + action + "\n");
         i++;
     }
