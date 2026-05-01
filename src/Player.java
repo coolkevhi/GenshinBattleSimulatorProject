@@ -21,6 +21,22 @@ public class Player {
             reaction = "Melt";
             chr1 = new Character("Amber(Pyro)");
             chr2 = new Character("Kaeya(Cryo)");
+        }else if(el == 3) { //Frozen
+            reaction = "Frozen";
+            chr1 = new Character("Xingqiu(Hydro");
+            chr2 = new Character("Kaeya(Cryo)");
+        }else if(el == 4) { //OverLoaded
+            reaction = "OverLoaded";
+            chr1 = new Character("Amber(Pyro)");
+            chr2 = new Character("Lisa(Electro)");
+        }else if(el == 5) { //ElecroCharged
+            reaction = "ElecroCharged";
+            chr1 = new Character("Lisa(Electro)");
+            chr2 = new Character("Xingqiu(Hydro");
+        }else if(el == 6) { //SuperConduct
+            reaction = "SuperConduct";
+            chr1 = new Character("Lisa(Electro)");
+            chr2 = new Character("Kaeya(Cryo)");
         }
     }
 
@@ -99,7 +115,9 @@ public class Player {
             case "1":
                 chr1.attack(enemy);
                 System.out.println("---Character 2---\n");
-                chr2.attack(enemy);
+                if(enemy.getHealth()!=0&&health!=0){
+                    chr2.attack(enemy);
+                }
                 enemy.turnFinshed(this);
                 break;
             case "2":

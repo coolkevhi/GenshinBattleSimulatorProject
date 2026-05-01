@@ -8,7 +8,7 @@ public class Character {
     private String element = "";
     private int energy = 0;
     private int maxEnergy = 0;
-    private boolean skillCooldown = false;
+    private int skillCooldown = 0;
     private BattleLog bl = new BattleLog();
 
     public Character(String name){
@@ -28,7 +28,7 @@ public class Character {
 
     public void normalAtk(RuinGuard enemy){
         enemy.damage(10);
-        if(this.name=="Amber(Pyro)"){
+        if(this.name.equals("Amber(Pyro)")){
             enemy.amberAttacks();
         }
         if(energy<maxEnergy){
@@ -41,12 +41,15 @@ public class Character {
     }
 
     public void skillAtk(RuinGuard enemy) {
-        enemy.damage(20);
+        int dmg = 20;
+        skillCooldown = 2;
         if (enemy.getAura().equals("none")) {
             enemy.setAura(element);
             enemy.addAura(2.0);
-
-
+            enemy.damage(dmg);
+        }else{
+            Reaction r = new Reaction(enemy,element,dmg);
+            r.doReaction();
         }
         if (energy < maxEnergy) {
             if (energy + 10 > maxEnergy) {
@@ -54,6 +57,18 @@ public class Character {
             } else {
                 energy += 10;
             }
+        }
+    }
+
+    public void burstAtk(RuinGuard enemy) {
+        int dmg = 30;
+        if (enemy.getAura().equals("none")) {
+            enemy.setAura(element);
+            enemy.addAura(2.0);
+            enemy.damage(dmg);
+        }else{
+            Reaction r = new Reaction(enemy,element,dmg);
+            r.doReaction();
         }
     }
 
@@ -67,7 +82,7 @@ public class Character {
     }
 
     public String skillCheck(){
-        if(!skillCooldown){
+        if(skillCooldown==0){
             return "ready";
         }else{
             return "on cooldown";
@@ -79,27 +94,33 @@ public class Character {
     }
 
     public void attack(RuinGuard enemy){
+        if(skillCooldown!=0){
+            skillCooldown--;
+        }
         Scanner scn = new Scanner(System.in);
-        if(skillCooldown){
+        if(skillCooldown!=0){
             System.out.println(this.getChrName() + " skill on cooldown\n");
         }
         System.out.println("[1] Normal Attack (physical, 10 dmg, +5 burst)");
-        if(!skillCooldown){
-            System.out.println("[2] Elemental Skill (" + element + ", 2U, 20 dmg, +10 burst) (WIP)");
+        if(skillCooldown==0){
+            System.out.println("[2] Elemental Skill (" + element + ", 2U, 20 dmg, +10 burst)");
         }
-        System.out.println("[3] Elemental Burst (" + element + ", 2U, 30 dmg, need " + maxEnergy + " burst) (WIP)");
+        System.out.println("[3] Elemental Burst (" + element + ", 2U, 30 dmg, need " + maxEnergy + " burst)");
         String input = scn.nextLine();
         if(input.equals("1")){
             this.normalAtk(enemy);
             bl.add(this.getChrName() + " uses Normal Attack: (physical, 10 dmg)");
             System.out.println("\n" + this.getChrName() + " uses Normal Attack: (physical, 10 dmg)");
         }else if(input.equals("2")){
-            if(!skillCooldown){
+            if(skillCooldown==0){
                 //skill attack
                 bl.add(this.getChrName() + " uses Elemental Skill: (" + element + ", 2U, 20 dmg)");
                 bl.add(this.getChrName() + " applied 2U of " + element);
-                System.out.println("\n" + this.getChrName() + " uses Elemental Skill: (" + element + ", 2U, 20 dmg) (WIP)");
+                System.out.println("\n" + this.getChrName() + " uses Elemental Skill: (" + element + ", 2U, 20 dmg)");
                 System.out.println(getChrName() + " applied 2U of " + element);
+                System.out.println(getChrName() + " skill on cooldown");
+                this.skillAtk(enemy);
+
             }else{
                 System.out.println(this.getChrName() + " skill on cooldown\n");
                 this.attack(enemy);
@@ -110,8 +131,9 @@ public class Character {
                 //burst attack
                 bl.add(this.getChrName() + " uses Elemental Burst: (" + element + ", 2U, 30 dmg)");
                 bl.add(this.getChrName() + " applied 2U of " + element);
-                System.out.println("\n" + this.getChrName() + " uses Elemental Burst: (" + element + ", 2U, 30 dmg) (WIP)");
+                System.out.println("\n" + this.getChrName() + " uses Elemental Burst: (" + element + ", 2U, 30 dmg)");
                 System.out.println(getChrName() + " applied 2U of " + element);
+                this.burstAtk(enemy);
 
             }else{
                 System.out.println("burst still not charged\n");

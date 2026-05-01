@@ -42,7 +42,8 @@ public class Main {
 
     public static void start(){
         Scanner scn = new Scanner(System.in);
-        System.out.println("Choose reaction\n[1] Vaporize\n[2] Melt\n[7] Back to main menu");
+        System.out.println("Choose reaction\n[1] Vaporize\n[2] Melt\n[3] Frozen" +
+                "\n[4] OverLoaded\n[5] ElectroCharged\n[6] SuperConduct\n[7] Back to main menu");
         String input = scn.nextLine();
         BattleLog battleLog = new BattleLog();
         RuinGuard ruinGuard = new RuinGuard(battleLog);
@@ -53,6 +54,18 @@ public class Main {
                 break;
             case "2":
                 battle(2, ruinGuard, battleLog);
+                break;
+            case "3":
+                battle(3, ruinGuard, battleLog);
+                break;
+            case "4":
+                battle(4, ruinGuard, battleLog);
+                break;
+            case "5":
+                battle(5, ruinGuard, battleLog);
+                break;
+            case "6":
+                battle(6, ruinGuard, battleLog);
                 break;
             case "7":
                 menu();

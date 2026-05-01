@@ -15,7 +15,11 @@ public class BattleLog {
     }
 
     public void add(String action){
-        batteLog.add(i +". " + "turn " + turn + " " + action + "\n");
+        if(i<10) {
+            batteLog.add("0" + i + ". " + "turn " + turn + " " + action + "\n");
+        }else{
+            batteLog.add(i + ". " + "turn " + turn + " " + action + "\n");
+        }
         i++;
     }
 
@@ -28,7 +32,7 @@ public class BattleLog {
     public void clear(){
         turn = 1;
         batteLog.clear();
-        batteLog.add("\n--------Battle Log --------\n(battle log WIP)");
+        batteLog.add("\n--------Battle Log --------\n");
     }
 
     public int getTurn(){
