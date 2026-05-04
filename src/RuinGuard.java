@@ -10,15 +10,18 @@ public class RuinGuard {
     private boolean coreExposed = false; //turn during exposed
     private BattleLog bl;
 
+    //constructs the Ruin Guard enemy object and sets it with 200hp
     public RuinGuard(BattleLog bl){
         health = 200;
         this.bl = bl;
     }
 
+    //returns Ruin Guards health as an integer
     public int getHealth(){
         return health;
     }
 
+    //returns the Ruin Guards health that the player sees including health bar
     public String getHP(){
         switch (health){
             case 200:
@@ -105,7 +108,9 @@ public class RuinGuard {
         return "";
     }
 
+    //Ruin Guards attack phase
     public void attack(Player pl) {
+        //checks if external factor is blocking it
         if (!amberBlocked && !freezeBlocked) {
             if (salvoIncoming) {
                 if (!electroBlocked) {
@@ -134,6 +139,7 @@ public class RuinGuard {
                 }
             } else {
                 int num = (int) (Math.random() * 101);
+                //87% chance of Ruin Guard using stomp attack and 13% of spin
                 if (num <= 87) {
                     bl.add("Ruin Guard stomps for 10 damage");
                     System.out.println("The Ruin Guard Stomps! 10 damage");
@@ -143,7 +149,9 @@ public class RuinGuard {
                     System.out.println("The Ruin Guard does spin attack! 20 damage");
                     pl.damage(20);
                 }
+                //extra 33% chance of salvo happening
                 int num2 = (int) (Math.random() * 101);
+                //preperation phase
                 if (num2 <= 33) {
                     salvoIncoming = true;
                     bl.add("Ruin Guard prepares for salvo");
@@ -153,6 +161,7 @@ public class RuinGuard {
                 }
             }
         }else{
+            //different block and stun checks
             if(salvoIncoming && amberBlocked) {
                 amberBlocked = false;
                 bl.add("Ruin Guard fired Salvo");
@@ -193,6 +202,7 @@ public class RuinGuard {
         }
     }
 
+    //damages Ruin Guard and subtracts health also detecting if core is exposed for double damage
     public void damage(double dmg){
         if (coreExposed) {
             if((health-dmg*2.0)>=0.0) {
@@ -209,12 +219,15 @@ public class RuinGuard {
         }
     }
 
+    //when amber attacks checks for stun
     public void amberAttacks(){
         int num3 = (int)(Math.random()*101);
+        //when salvo 50% chance of stunning
         if(salvoIncoming){
             if(num3<=50){
                 amberBlocked = true;
             }
+            //no salvo 33% chance of stunning
         }else{
             if(num3<=33){
                 amberBlocked = true;
@@ -222,23 +235,27 @@ public class RuinGuard {
         }
     }
 
+    //Freezes the Ruin Guard when using Frozen reaction
     public void freeze(){
         freezeBlocked = true;
     }
 
+    //Electro charges the Ruin Guard when using the electro charge reaction
     public void addElectroCharged(){
         electroBlocked = true;
     }
 
-
+    //returns current aura placed on Ruin Guard
     public String getAura(){
         return aura;
     }
 
+    //Sets current Aura on Ruin Guard
     public void setAura(String aura){
         this.aura = aura;
     }
 
+    //Subtracts certain amount of auraGU
     public void loseAuraGU(double auraGU){
         if(this.auraGU-auraGU>0){
             this.auraGU = auraGU;
@@ -248,10 +265,12 @@ public class RuinGuard {
 
     }
 
+    //returns current AuraGU of the Ruin Guard
     public double getAuraGU(){
         return auraGU;
     }
 
+    //Adds AuraGU to the Ruin Guard
     public void addAura(double auraGU){
         if ((this.auraGU + auraGU)<=4) {
             this.auraGU += auraGU;
@@ -260,10 +279,13 @@ public class RuinGuard {
         }
     }
 
+    //Used to enter the end phase of the turn decaying auraGU and moving on to the next turn
     public void turnFinshed(Player pl){
 
+        //resets core after salvo
         coreExposed = false;
 
+        //decays auraGU
         if(auraGU!=0.0){
             if(auraGU-0.5>=0.5){
                 System.out.print("\nRuin Guard aura decay 0.5 now " + auraGU + "\n");
@@ -279,16 +301,19 @@ public class RuinGuard {
             aura = "none";
             electroBlocked = false;
         }
+        //restarts turn if battle is still happening
         if((pl.getHealth() != 0) && (health != 0)) {
             this.attack(pl);
             bl.incTurn();
         }
     }
 
+    //returns if core exposed
     public boolean isCoreExposed(){
         return coreExposed;
     }
 
+    //returns the printable hp of the Ruin Guard
     public String toString(){
         return "Ruin Guard HP: " + this.getHP() + "\nAura: " + aura;
     }

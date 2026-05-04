@@ -5,12 +5,14 @@ public class Reaction {
     private int dmg;
     private BattleLog bl = new BattleLog();
 
+    //constructor with the trigger element to the reaction
     public Reaction(RuinGuard enemy, String trigger, int dmg) {
         this.enemy = enemy;
         this.trigger = trigger;
         this.dmg = dmg;
     }
 
+    //using the trigger element and aura on element it decides which reaction to use
     public void doReaction() {
         if ((trigger.equals("Hydro") || enemy.getAura().equals("Hydro"))
                 && (trigger.equals("Pyro") || enemy.getAura().equals("Pyro"))) {
@@ -32,6 +34,7 @@ public class Reaction {
         }
     }
 
+    //vaporize reaction with depending on the trigger can do 2x or 1.5x
     public void vaporize() {
         if (trigger.equals("Hydro")) {
             enemy.damage(dmg * 2);
@@ -48,6 +51,7 @@ public class Reaction {
         }
     }
 
+    //melt reaction with depending on the trigger can do 2x or 1.5x
     public void melt() {
         if (trigger.equals("Pyro")) {
             enemy.damage(dmg * 2);
@@ -64,6 +68,7 @@ public class Reaction {
         }
     }
 
+    //frozen reaction freezes Ruin Guard for one turn
     public void frozen() {
         enemy.freeze();
         enemy.loseAuraGU(1.0);
@@ -72,6 +77,7 @@ public class Reaction {
         bl.add("Frozen! no extra damage Ruin Guard frozen 1U of Aura Consumed");
     }
 
+    //overload reaction does +25 damage
     public void overload() {
         enemy.damage(dmg + 25);
         enemy.loseAuraGU(4.1); //aura fully destroyed
@@ -81,6 +87,7 @@ public class Reaction {
         bl.add("Overloaded! Damage: " + dmg + "x1.0+25 =" + dmg + 25 + ". Aura Consumed");
     }
 
+    //electro charged reaction stops salvo
     public void electroCharged() {
         enemy.damage(dmg);
         enemy.addAura(4.0);
@@ -90,6 +97,7 @@ public class Reaction {
         bl.add("Electro Charged! No extra damage Ruin Guard is now Electro Charged!");
     }
 
+    //superconduct reaction does 1.9x
     public void superConduct() {
         enemy.damage(dmg * 1.9);
         enemy.loseAuraGU(2.0);

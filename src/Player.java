@@ -6,9 +6,10 @@ public class Player {
     public int health = 1;
     private Character chr1;
     private Character chr2;
-    private String reaction = "";
-    private BattleLog bl;
+    private String reaction = ""; //reaction chosen
+    private BattleLog bl; //battle log object
 
+    //constructor that creates character objects depending on the chosen reaction
     public Player(int el, RuinGuard enemy, BattleLog bl){
         this.bl = bl;
         this.enemy = enemy;
@@ -17,33 +18,40 @@ public class Player {
             reaction = "Vaporize";
             chr1 = new Character("Amber(Pyro)");
             chr2 = new Character("Xingqiu(Hydro)");
+            System.out.println("\nYour team is "+chr1.getFullChrName() + " and " + chr2.getFullChrName() +"\n");
         }else if(el == 2) { //melt
             reaction = "Melt";
             chr1 = new Character("Amber(Pyro)");
             chr2 = new Character("Kaeya(Cryo)");
+            System.out.println("\nYour team is "+chr1.getFullChrName() + " and " + chr2.getFullChrName() +"\n");
         }else if(el == 3) { //Frozen
             reaction = "Frozen";
             chr1 = new Character("Xingqiu(Hydro");
             chr2 = new Character("Kaeya(Cryo)");
+            System.out.println("\nYour team is "+chr1.getFullChrName() + " and " + chr2.getFullChrName() +"\n");
         }else if(el == 4) { //OverLoaded
             reaction = "OverLoaded";
             chr1 = new Character("Amber(Pyro)");
             chr2 = new Character("Lisa(Electro)");
+            System.out.println("\nYour team is "+chr1.getFullChrName() + " and " + chr2.getFullChrName() +"\n");
         }else if(el == 5) { //ElecroCharged
             reaction = "ElecroCharged";
             chr1 = new Character("Lisa(Electro)");
             chr2 = new Character("Xingqiu(Hydro");
+            System.out.println("\nYour team is "+chr1.getFullChrName() + " and " + chr2.getFullChrName() +"\n");
         }else if(el == 6) { //SuperConduct
             reaction = "SuperConduct";
             chr1 = new Character("Lisa(Electro)");
             chr2 = new Character("Kaeya(Cryo)");
+            System.out.println("\nYour team is "+chr1.getFullChrName() + " and " + chr2.getFullChrName() +"\n");
         }
     }
-
+    //returns player health as an integer
     public int getHealth(){
         return health;
     }
 
+    //returns the players health that the player sees including health bar
     public String getHP(){
         switch (health){
             case 100:
@@ -90,6 +98,7 @@ public class Player {
         return "";
     }
 
+    //used to damage the player and subtract health
     public void damage(int dmg){
         if(health-dmg>=0) {
             health -= dmg;
@@ -98,6 +107,7 @@ public class Player {
         }
     }
 
+    //The player data printed at the beginning of the turn
     public void turnInfo(){
         System.out.println("\nTurn " + bl.getTurn() + "\n-------------------------" + "\n" +
                 "Reaction: " + this.reaction + " (" + chr1.getChrName() + " + " + chr2.getChrName() + ")\n" +
@@ -107,6 +117,7 @@ public class Player {
 
     }
 
+    //starts the combat phase were the player chooses which chr and attacks to use
     public void combat(){
         Scanner scn = new Scanner(System.in);
         System.out.println("\n---Character 1---\nwho acts first? [1] " + chr1.getChrName() + " [2] " + chr2.getChrName());

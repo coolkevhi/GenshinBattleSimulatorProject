@@ -5,12 +5,13 @@ public class Character {
     String[] characters = {"Amber(Pyro)", "Xingqiu(Hydro)", "Kaeya(Cryo)", "Lisa(Electro)"};
 
     private String name = "";
-    private String element = "";
-    private int energy = 0;
-    private int maxEnergy = 0;
-    private int skillCooldown = 0;
+    private String element = ""; //element of the chr
+    private int energy = 0; //current burst energy
+    private int maxEnergy = 0; //max burst energy
+    private int skillCooldown = 0; //amount of turns skill is on cooldown
     private BattleLog bl = new BattleLog();
 
+    //constructor that finds the chr and sets the name, element, energy, and max energy
     public Character(String name){
         for(String chr : characters){
             int para = chr.indexOf("(") + 1;
@@ -26,8 +27,10 @@ public class Character {
         }
     }
 
+    //basic attack for all chrs that does 10dmg and adds 5 burst energy
     public void normalAtk(RuinGuard enemy){
         enemy.damage(10);
+        //when amber does normal attack has chance to stun Ruin Guard
         if(this.name.equals("Amber(Pyro)")){
             enemy.amberAttacks();
         }
@@ -40,6 +43,8 @@ public class Character {
         }
     }
 
+    //skill attack that does 20dmg and adds 10 burst energy
+    //sets aura depending on chr element or does reaction if another aura is already set
     public void skillAtk(RuinGuard enemy) {
         int dmg = 20;
         skillCooldown = 2;
@@ -60,6 +65,8 @@ public class Character {
         }
     }
 
+    //burst attack that does 30dmg if max burst energy is reached and then resets it after
+    //sets aura depending on chr element or does reaction if another aura is already set
     public void burstAtk(RuinGuard enemy) {
         int dmg = 30;
         if (enemy.getAura().equals("none")) {
@@ -72,15 +79,18 @@ public class Character {
         }
     }
 
+    //returns just chr name
     public String getChrName(){
         int para = name.indexOf("(");
         return name.substring(0, para);
     }
 
+    //returns chr name + element
     public String getFullChrName(){
         return name;
     }
 
+    //checks if skill is on cooldown
     public String skillCheck(){
         if(skillCooldown==0){
             return "ready";
@@ -89,10 +99,12 @@ public class Character {
         }
     }
 
+    //checks if burst energy is reached to be able to do burst attack
     public String burstCheck() {
         return energy + "/" + maxEnergy;
     }
 
+    //attacking phase of this chr to decide which attack to use
     public void attack(RuinGuard enemy){
         if(skillCooldown!=0){
             skillCooldown--;
