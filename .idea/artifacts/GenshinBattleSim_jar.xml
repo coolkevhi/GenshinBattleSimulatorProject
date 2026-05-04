@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="GenshinBattleSim:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/GenshinBattleSim_jar</output-path>
+    <root id="archive" name="GenshinBattleSim.jar">
+      <element id="module-output" name="GenshinBattleSim" />
+    </root>
+  </artifact>
+</component>
