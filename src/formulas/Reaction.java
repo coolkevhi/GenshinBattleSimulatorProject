@@ -7,14 +7,14 @@ public class Reaction {
 
     private RuinGuard enemy;
     private String trigger;
-    private int dmg;
+    private int baseDMG;
     private BattleLog bl = new BattleLog();
 
     //constructor with the trigger element to the reaction
     public Reaction(RuinGuard enemy, String trigger, int dmg) {
         this.enemy = enemy;
         this.trigger = trigger;
-        this.dmg = dmg;
+        this.baseDMG = dmg;
     }
 
     //using the trigger element and aura on element it decides which reaction to use
@@ -42,34 +42,54 @@ public class Reaction {
     //vaporize reaction with depending on the trigger can do 2x or 1.5x
     public void vaporize() {
         if (trigger.equals("Hydro")) {
-            enemy.damage(dmg * 2);
+            Damage DMG = new Damage();
+            int dmg;
+            dmg = DMG.getDMG(baseDMG);
+            DMG.setAmplifyingReaction(2); //times 2 multiplier
             enemy.loseAuraGU(4.0); // 2*2 = 4
             System.out.println(">>Vaporize! Hydro triggers on Pyro Aura!<<\nDamage: "
                     + dmg + "x2.0 =" + dmg * 2 + ". Aura Consumed");
             bl.add("Vaporize! Damage: " + dmg + "x2.0 =" + dmg * 2 + ". Aura Consumed");
+            dmg = DMG.getDMG(baseDMG); //calulates dmg with mult
+            enemy.damage(dmg);
         } else if (trigger.equals("Pyro")) {
-            enemy.damage((int)(dmg * 1.5));
+            Damage DMG = new Damage();
+            int dmg;
+            dmg = DMG.getDMG(baseDMG);
+            DMG.setAmplifyingReaction(1.5); //times 1.5 multiplier
             enemy.loseAuraGU(1.0);
             System.out.println(">>Vaporize! Pyro triggers on Hydro Aura!<<\nDamage: "
                     + dmg + "x1.5 =" + dmg * 1.5 + ". 1U of Aura Consumed");
             bl.add("Vaporize! Damage: " + dmg + "x1.5 =" + dmg * 1.5 + ". 1U of Aura Consumed");
+            dmg = DMG.getDMG(baseDMG); //calulates dmg with mult
+            enemy.damage(dmg);
         }
     }
 
     //melt reaction with depending on the trigger can do 2x or 1.5x
     public void melt() {
         if (trigger.equals("Pyro")) {
-            enemy.damage(dmg * 2);
+            Damage DMG = new Damage();
+            int dmg;
+            dmg = DMG.getDMG(baseDMG);
+            DMG.setAmplifyingReaction(2); //times 2 multiplier
             enemy.loseAuraGU(4.0); // 2*2 = 4
             System.out.println(">>Melt! Pyro triggers on Cryo Aura!<<\nDamage: "
                     + dmg + "x2.0 =" + dmg * 2 + ". Aura Consumed");
             bl.add("Melt! Damage: " + dmg + "x2.0 =" + dmg * 2 + ". Aura Consumed");
+            dmg = DMG.getDMG(baseDMG); //calulates dmg with mult
+            enemy.damage(dmg);
         } else if (trigger.equals("Cryo")) {
-            enemy.damage((int)(dmg * 1.5));
+            Damage DMG = new Damage();
+            int dmg;
+            dmg = DMG.getDMG(baseDMG);
+            DMG.setAmplifyingReaction(1.5); //times 1.5 multiplier
             enemy.loseAuraGU(1.0);
             System.out.println(">>Melt! Cryo triggers on Pyro Aura!<<\nDamage: "
                     + dmg + "x1.5 =" + dmg * 1.5 + ". 1U of Aura Consumed");
             bl.add("Melt! Damage: " + dmg + "x1.5 =" + dmg * 1.5 + ". 1U Aura Consumed");
+            dmg = DMG.getDMG(baseDMG); //calulates dmg with mult
+            enemy.damage(dmg);
         }
     }
 
@@ -84,17 +104,23 @@ public class Reaction {
 
     //overload reaction does +25 damage
     public void overload() {
-        enemy.damage(dmg + 25);
+        Damage DMG = new Damage();
+        int dmg;
+        dmg = DMG.getDMG(baseDMG);
         enemy.loseAuraGU(4.1); //aura fully destroyed
         System.out.println(">>Over Loaded! " + trigger + " triggers on " + enemy.getAura()
                 + " Aura!<<\nDamage: "
                 + dmg + "x1.0+25 =" + (dmg + 25) + ". Aura Consumed");
         bl.add("Overloaded! Damage: " + dmg + "x1.0+25 =" + dmg + 25 + ". Aura Consumed");
+        enemy.damage(dmg+25); //extra 25 damage
     }
 
     //electro charged reaction stops salvo
     public void electroCharged() {
-        enemy.damage(dmg);
+        Damage DMG = new Damage();
+        int dmg;
+        dmg = DMG.getDMG(baseDMG); //base dmg for 20 from damage formula
+        enemy.damage(dmg); //no mult
         enemy.addAura(4.0);
         enemy.addElectroCharged();
         System.out.println(">>Electro Charged! " + trigger + " triggers on " + enemy.getAura()
@@ -104,12 +130,17 @@ public class Reaction {
 
     //superconduct reaction does 1.9x
     public void superConduct() {
-        enemy.damage((int)(dmg * 1.9));
+        Damage DMG = new Damage();
+        int dmg;
+        dmg = DMG.getDMG(baseDMG);
+        DMG.setAmplifyingReaction(1.9); //times 1.9 multiplier
         enemy.loseAuraGU(2.0);
         System.out.println(">>Super Conduct! " + trigger + " triggers on " + enemy.getAura()
                 + " Aura!<<\nDamage: "
                 + dmg + "x1.9 =" + dmg*1.9 + ". Aura Consumed");
         bl.add("Super Conduct! Damage: " + dmg + "x1.9 =" + dmg * 1.5 + ". 2U of Aura Consumed");
+        dmg = DMG.getDMG(baseDMG); //calulates dmg with mult
+        enemy.damage(dmg);
 
     }
 

@@ -1,8 +1,10 @@
 package characters;
 
 import entities.enemy.RuinGuard;
+import formulas.Damage;
 import ui.BattleLog;
 import formulas.Reaction;
+import formulas.Damage;
 
 import java.util.Scanner;
 
@@ -35,7 +37,10 @@ public class Character {
 
     //basic attack for all chrs that does 10dmg and adds 5 burst energy
     public void normalAtk(RuinGuard enemy){
-        enemy.damage(10);
+        Damage DMG = new Damage();
+        int dmg;
+        dmg = DMG.getDMG(-5.5); //base dmg for 10 from damage formula
+        enemy.damage(dmg);
         //when amber does normal attack has chance to stun Ruin Guard
         if (this.name.equals("Amber(Pyro)")){
             enemy.amberAttacks();
@@ -52,13 +57,16 @@ public class Character {
     //skill attack that does 20dmg and adds 10 burst energy
     //sets aura depending on chr element or does reaction if another aura is already set
     public void skillAtk(RuinGuard enemy) {
-        int dmg = 20;
         skillCooldown = 2;
         if (enemy.getAura().equals("none")) {
             enemy.setAura(element);
             enemy.addAura(2.0);
+            Damage DMG = new Damage();
+            int dmg;
+            dmg = DMG.getDMG(1); //base dmg for 20 from damage formula
             enemy.damage(dmg);
         }else {
+            int dmg = 1; //base dmg for 30 from damage formula
             Reaction r = new Reaction(enemy,element,dmg);
             r.doReaction();
         }
@@ -74,12 +82,15 @@ public class Character {
     //burst attack that does 30dmg if max burst energy is reached and then resets it after
     //sets aura depending on chr element or does reaction if another aura is already set
     public void burstAtk(RuinGuard enemy) {
-        int dmg = 30;
         if (enemy.getAura().equals("none")) {
             enemy.setAura(element);
             enemy.addAura(2.0);
+            Damage DMG = new Damage();
+            int dmg;
+            dmg = DMG.getDMG(8); //base dmg for 30 from damage formula
             enemy.damage(dmg);
         }else {
+            int dmg = 8; //base dmg for 30 from damage formula
             Reaction r = new Reaction(enemy,element,dmg);
             r.doReaction();
         }

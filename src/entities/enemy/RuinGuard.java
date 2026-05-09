@@ -2,6 +2,7 @@ package entities.enemy;
 
 import entities.entity;
 import entities.player.Player;
+import formulas.Damage;
 
 public class RuinGuard extends entity {
 
@@ -16,9 +17,9 @@ public class RuinGuard extends entity {
     private int maxHealth = 1; //Ruin Guards max health
 
     //constructs the Ruin Guard enemy object and sets it with 200hp
-    public RuinGuard(){
-        health = 200;
-        maxHealth = 200;
+    public RuinGuard(int hp){
+        health = hp;
+        maxHealth = hp;
     }
 
     //Ruin Guards attack phase
@@ -34,7 +35,10 @@ public class RuinGuard extends entity {
                     System.out.println("Missles hit! 15 damage");
                     System.out.println("Core Exposed!");
                     System.out.println("your next turn now does double damage!");
-                    pl.damage(15);
+                    Damage DMG = new Damage();
+                    int dmg;
+                    dmg = DMG.getDMG(-2); //base dmg for 15 from damage formula
+                    pl.damage(dmg);
                     coreExposed = true;
                     salvoIncoming = false;
                 }else{
@@ -56,11 +60,17 @@ public class RuinGuard extends entity {
                 if (num <= 87) {
                     blAdd("Ruin Guard stomps for 10 damage");
                     System.out.println("The Ruin Guard Stomps! 10 damage");
-                    pl.damage(10);
+                    Damage DMG = new Damage();
+                    int dmg;
+                    dmg = DMG.getDMG(-5.5); //base dmg for 10 from damage formula
+                    pl.damage(dmg);
                 } else {
                     blAdd("Ruin Guard spins for 20 damage");
                     System.out.println("The Ruin Guard does spin attack! 20 damage");
-                    pl.damage(20);
+                    Damage DMG = new Damage();
+                    int dmg;
+                    dmg = DMG.getDMG(-5.5); //base dmg for 20 from damage formula
+                    pl.damage(dmg);
                 }
                 //extra 33% chance of salvo happening
                 int num2 = (int) (Math.random() * 101);

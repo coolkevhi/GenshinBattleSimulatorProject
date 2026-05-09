@@ -11,13 +11,16 @@ public class Menus {
 
     //main start menu to start or quit the program
     public static void mainMenu(){
-        System.out.println("======Genshin Battle Simulator======\nWelcome to the sim!\n[1] Start\n[2] Quit");
+        System.out.println("\n======Genshin Battle Simulator======\nWelcome to the sim!\n[1] Start\n[2] Set Difficulty\n[3] Quit");
         String input = scn.nextLine();
         switch (input){
             case "1":
                 start();
                 break;
             case "2":
+                DifficultySelector.difficultyScreen();
+                break;
+            case "3":
                 System.out.println("Thanks for playing!");
                 System.exit(0);
                 break;
@@ -50,7 +53,7 @@ public class Menus {
                 "\n[4] OverLoaded\n[5] ElectroCharged\n[6] SuperConduct\n[7] Back to main menu");
         String input = scn.nextLine();
         BattleLog battleLog = new BattleLog();
-        RuinGuard ruinGuard = new RuinGuard();
+        RuinGuard ruinGuard = new RuinGuard(DifficultySelector.getRuinGuardMaxHP());
         battleLog.clear();
         switch (input){
             case "1":

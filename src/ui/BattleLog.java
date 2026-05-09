@@ -34,6 +34,7 @@ public class BattleLog {
 
     //clears and resets the battle log
     public void clear(){
+        i =1;
         turn = 1;
         batteLog.clear();
         batteLog.add("\n--------Battle Log --------\n");

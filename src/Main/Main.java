@@ -1,5 +1,6 @@
 package Main;
 
+import formulas.Damage;
 import ui.Menus;
 
 public class Main {
