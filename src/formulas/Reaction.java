@@ -1,3 +1,8 @@
+package formulas;
+
+import entities.enemy.RuinGuard;
+import ui.BattleLog;
+
 public class Reaction {
 
     private RuinGuard enemy;
@@ -43,7 +48,7 @@ public class Reaction {
                     + dmg + "x2.0 =" + dmg * 2 + ". Aura Consumed");
             bl.add("Vaporize! Damage: " + dmg + "x2.0 =" + dmg * 2 + ". Aura Consumed");
         } else if (trigger.equals("Pyro")) {
-            enemy.damage(dmg * 1.5);
+            enemy.damage((int)(dmg * 1.5));
             enemy.loseAuraGU(1.0);
             System.out.println(">>Vaporize! Pyro triggers on Hydro Aura!<<\nDamage: "
                     + dmg + "x1.5 =" + dmg * 1.5 + ". 1U of Aura Consumed");
@@ -60,7 +65,7 @@ public class Reaction {
                     + dmg + "x2.0 =" + dmg * 2 + ". Aura Consumed");
             bl.add("Melt! Damage: " + dmg + "x2.0 =" + dmg * 2 + ". Aura Consumed");
         } else if (trigger.equals("Cryo")) {
-            enemy.damage(dmg * 1.5);
+            enemy.damage((int)(dmg * 1.5));
             enemy.loseAuraGU(1.0);
             System.out.println(">>Melt! Cryo triggers on Pyro Aura!<<\nDamage: "
                     + dmg + "x1.5 =" + dmg * 1.5 + ". 1U of Aura Consumed");
@@ -99,7 +104,7 @@ public class Reaction {
 
     //superconduct reaction does 1.9x
     public void superConduct() {
-        enemy.damage(dmg * 1.9);
+        enemy.damage((int)(dmg * 1.9));
         enemy.loseAuraGU(2.0);
         System.out.println(">>Super Conduct! " + trigger + " triggers on " + enemy.getAura()
                 + " Aura!<<\nDamage: "
