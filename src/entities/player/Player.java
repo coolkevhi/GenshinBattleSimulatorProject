@@ -73,7 +73,7 @@ public class Player extends entity {
     //The player data printed at the beginning of the turn
     public void turnInfo(){
         System.out.println("\nTurn " + this.blTurn() + "\n-------------------------" + "\n" +
-                "formulas.Reaction: " + this.reaction + " (" + chr1.getChrName() + " + " + chr2.getChrName() + ")\n" +
+                "Reaction: " + this.reaction + " (" + chr1.getChrName() + " + " + chr2.getChrName() + ")\n" +
                 chr1.getFullChrName() + " Burst: " + chr1.burstCheck() + " Skill: " + chr1.skillCheck() + "\n" +
                 chr2.getFullChrName() + " Burst: " + chr2.burstCheck() + " Skill: " + chr2.skillCheck() + "\n" +
                 "\nentities.player.Player HP: " + this.getHP(health,maxHealth) + "\n\n" + enemy);
